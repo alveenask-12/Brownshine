@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LUMIÈRE — Luxury Perfume House</title>
+  <style>
+    /* ── RESET & VARIABLES ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #0a0806;
+      --surface:  #13100c;
+      --card:     #1c1710;
+      --gold:     #c8963c;
+      --gold2:    #e8c47a;
+      --rose:     #c4776a;
+      --cream:    #f0e8d8;
+      --muted:    #7a6a55;
+      --border:   rgba(200,150,60,0.18);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BG ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: -1;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(200,150,60,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 70%, rgba(196,119,106,0.06) 0%, transparent 50%);
+      animation: bgPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse {
+      from { opacity: 1; }
+      to   { opacity: 0.5; }
+    }
+
+    /* ── NAV ── */
+    div.nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,8,6,0.92);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 60px;
+      display: flex; align-items: center; gap: 32px;
+      backdrop-filter: blur(10px);
+      animation: slideDown 0.7s ease;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+    div.nav a {
+      color: var(--cream);
+      text-decoration: none;
+      font-family: Georgia, serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    div.nav a:hover { color: var(--gold); }
+    div.nav a.logo {
+      font-size: 1.4rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      margin-right: auto;
+      font-style: italic;
+    }
+    div.nav a.nav-btn {
+      border: 1px solid var(--gold);
+      padding: 7px 20px;
+      color: var(--gold);
+      transition: background 0.3s, color 0.3s;
+    }
+    div.nav a.nav-btn:hover { background: var(--gold); color: var(--bg); }
+
+    /* ── HERO ── */
+    div.hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 80px 60px;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    div.hero-text { flex: 1; padding-right: 60px; }
+
+    /* h tags used directly */
+    div.hero h6 {
+      font-size: 0.65rem; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 28px;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+    div.hero h1 {
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: normal; line-height: 1.06;
+      color: var(--cream); margin-bottom: 10px;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+    div.hero h1 i { color: var(--gold2); font-size: 1.1em; }
+    div.hero h2 {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      font-weight: normal; font-style: italic;
+      color: var(--gold2); margin-bottom: 32px;
+      animation: fadeUp 0.8s ease 0.65s both;
+    }
+    div.hero p {
+      font-size: 1.05rem; line-height: 1.9;
+      color: var(--muted); max-width: 440px;
+      margin-bottom: 44px;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* hero buttons as <a> tags */
+    div.hero-btns { display: flex; gap: 18px; align-items: center; animation: fadeUp 0.8s ease 1s both; }
+    div.hero-btns a {
+      font-family: Georgia, serif;
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 14px 36px;
+      transition: all 0.35s ease;
+    }
+    div.hero-btns a.btn-primary {
+      background: var(--gold); color: var(--bg);
+    }
+    div.hero-btns a.btn-primary:hover {
+      background: var(--gold2); transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(200,150,60,0.3);
+    }
+    div.hero-btns a.btn-ghost {
+      color: var(--gold); border: 1px solid rgba(200,150,60,0.4);
+    }
+    div.hero-btns a.btn-ghost:hover {
+      border-color: var(--gold); background: rgba(200,150,60,0.08);
+    }
+
+    /* hero bottle side */
+    div.hero-visual {
+      width: 380px; display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    div.bottle-glow {
+      position: absolute; width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,150,60,0.14) 0%, transparent 70%);
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { transform: scale(1); opacity: 1; }
+      50%      { transform: scale(1.1); opacity: 0.6; }
+    }
+    div.bottle-svg {
+      position: relative; z-index: 2;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-18px); }
+    }
+
+    /* ── MARQUEE ── */
+    div.marquee {
+      background: var(--gold);
+      padding: 13px 0; overflow: hidden; white-space: nowrap;
+    }
+    div.marquee-inner {
+      display: inline-block;
+      animation: marquee 20s linear infinite;
+    }
+    div.marquee-inner b { color: var(--bg); font-size: 0.75rem; letter-spacing: 0.3em; padding: 0 36px; font-weight: normal; }
+    div.marquee-inner i { color: rgba(10,8,6,0.4); font-style: normal; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SECTION COMMON ── */
+    div.section { padding: 100px 60px; }
+    div.section h3 {
+      font-size: 0.65rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 18px;
+    }
+    div.section h1 {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: normal; line-height: 1.2;
+      margin-bottom: 60px;
+    }
+    div.section h1 i { font-style: italic; color: var(--gold2); }
+
+    hr {
+      border: none; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 60px 0;
+    }
+
+    /* ── PRODUCTS (using table) ── */
+    div.products-wrap { overflow-x: auto; }
+    table.products {
+      width: 100%; border-collapse: separate; border-spacing: 20px 0;
+    }
+    table.products th {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0;
+      font-weight: normal;
+      vertical-align: top;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    table.products th:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(200,150,60,0.12);
+    }
+    div.prod-img {
+      background: linear-gradient(145deg, #1c1710, #2a2018);
+      padding: 52px 30px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    div.prod-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,6,0.6), transparent 50%);
+    }
+    div.prod-tag {
+      position: absolute; top: 16px; right: 16px; z-index: 2;
+      background: var(--gold); color: var(--bg);
+      font-size: 0.58rem; letter-spacing: 0.2em;
+      text-transform: uppercase; padding: 4px 10px;
+      font-family: Georgia, serif;
+    }
+    div.prod-info { padding: 24px 24px 28px; }
+    div.prod-info h4 {
+      font-size: 1.1rem; font-weight: normal;
+      letter-spacing: 0.06em; margin-bottom: 8px;
+    }
+    div.prod-info p {
+      font-style: italic; font-size: 0.9rem;
+      color: var(--muted); margin-bottom: 18px; line-height: 1.6;
+    }
+    div.prod-foot { display: flex; justify-content: space-between; align-items: center; }
+    div.prod-foot b { color: var(--gold); font-size: 0.95rem; letter-spacing: 0.08em; font-weight: normal; }
+    div.prod-foot a {
+      font-size: 0.62rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--cream);
+      text-decoration: none; border: 1px solid rgba(240,232,216,0.2);
+      padding: 7px 16px;
+      transition: all 0.3s;
+    }
+    div.prod-foot a:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+    /* ── STORY (blockquote + dl) ── */
+    div.story { display: flex; gap: 80px; align-items: flex-start; padding: 100px 60px; }
+    div.story-left { flex: 1; }
+    div.story-right { flex: 1; }
+
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 24px 32px;
+      background: var(--card);
+      margin: 28px 0;
+      position: relative;
+    }
+    blockquote p {
+      font-style: italic; font-size: 1.15rem;
+      line-height: 1.8; color: var(--cream);
+    }
+    blockquote b { display: block; margin-top: 16px; font-size: 0.75rem; color: var(--gold); letter-spacing: 0.15em; font-style: normal; }
+
+    dl { margin-top: 32px; }
+    dl dt {
+      color: var(--gold); font-size: 0.72rem;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-top: 22px; margin-bottom: 6px;
+    }
+    dl dd {
+      color: var(--muted); font-size: 0.95rem;
+      line-height: 1.7; padding-left: 16px;
+      border-left: 1px solid var(--border);
+    }
+
+    /* stats using pre */
+    pre.stats {
+      font-family: Georgia, serif;
+      white-space: pre-wrap;
+      display: flex; gap: 40px; flex-wrap: wrap;
+      background: none; border: none;
+      margin-top: 40px;
+    }
+    pre.stats b { display: block; font-size: 2.8rem; color: var(--gold); line-height: 1; }
+    pre.stats i { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── INGREDIENTS (ul/ol) ── */
+    div.ingredients { background: var(--surface); padding: 100px 60px; }
+    div.ing-grid { display: flex; gap: 2px; margin-top: 60px; }
+    div.ing-card {
+      flex: 1; padding: 48px 28px;
+      background: var(--card); cursor: default;
+      border-bottom: 3px solid transparent;
+      transition: border-color 0.4s, background 0.4s, transform 0.3s;
+    }
+    div.ing-card:hover { border-color: var(--gold); background: #22190f; transform: translateY(-6px); }
+    div.ing-card h5 {
+      font-size: 0.68rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+    }
+    div.ing-card p { font-style: italic; font-size: 0.93rem; color: var(--muted); line-height: 1.75; }
+
+    ul.notes-list { list-style: none; margin-top: 24px; }
+    ul.notes-list li {
+      color: var(--cream); font-size: 0.9rem;
+      padding: 6px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+    }
+    ul.notes-list li b { color: var(--gold); }
+
+    /* ── ORDER TABLE ── */
+    div.order-section { padding: 100px 60px; }
+    table.order-tbl {
+      width: 100%; border-collapse: collapse; margin-top: 40px;
+    }
+    table.order-tbl th {
+      background: var(--card); color: var(--gold);
+      font-size: 0.68rem; letter-spacing: 0.2em;
+      text-transform: uppercase; padding: 14px 20px;
+      text-align: left; border-bottom: 2px solid var(--border);
+      font-weight: normal;
+    }
+    table.order-tbl td {
+      padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.9rem; color: var(--cream);
+      transition: background 0.2s;
+    }
+    table.order-tbl tr:hover td { background: rgba(200,150,60,0.05); }
+    table.order-tbl td b { color: var(--gold); }
+    table.order-tbl td i { color: var(--rose); font-style: normal; font-size: 0.78rem; }
+    table.order-tbl td u { text-decoration-color: var(--gold); color: var(--gold2); }
+
+    /* ── CONTACT / FORM ── */
+    div.contact { background: var(--surface); padding: 100px 60px; }
+    div.contact h3 { font-size: 0.65rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    div.contact h1 { font-size: clamp(2rem, 3.5vw, 3rem); font-weight: normal; margin-bottom: 48px; }
+    div.contact h1 i { font-style: italic; color: var(--gold2); }
+
+    form.contact-form { display: flex; flex-wrap: wrap; gap: 20px; max-width: 700px; }
+    form.contact-form div.field { flex: 1; min-width: 240px; }
+    form.contact-form div.field-full { flex: 100%; }
+    form.contact-form label {
+      display: block; font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 8px;
+    }
+    form.contact-form input {
+      width: 100%; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,150,60,0.2);
+      padding: 13px 18px; color: var(--cream);
+      font-family: Georgia, serif; font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    form.contact-form input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(200,150,60,0.1);
+    }
+    form.contact-form input::placeholder { color: var(--muted); }
+    form.contact-form input[type="submit"] {
+      background: var(--gold); color: var(--bg);
+      border: none; cursor: pointer;
+      font-size: 0.72rem; letter-spacing: 0.22em;
+      text-transform: uppercase; padding: 15px 40px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    form.contact-form input[type="submit"]:hover {
+      background: var(--gold2); transform: translateY(-2px);
+    }
+
+    address {
+      font-style: normal; margin-top: 48px;
+      border-top: 1px solid var(--border); padding-top: 32px;
+      display: flex; gap: 60px; flex-wrap: wrap;
+    }
+    address div h6 { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; font-weight: normal; }
+    address div p { font-size: 0.88rem; color: var(--muted); line-height: 1.8; }
+    address div a { color: var(--cream); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+    address div a:hover { color: var(--gold); }
+
+    /* ── FOOTER ── */
+    div.footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 60px 60px 36px;
+    }
+    div.footer-top { display: flex; gap: 60px; margin-bottom: 52px; }
+    div.footer-brand { flex: 2; }
+    div.footer-brand h1 { font-size: 1.6rem; letter-spacing: 0.3em; color: var(--gold); margin-bottom: 16px; font-weight: normal; }
+    div.footer-brand p { font-style: italic; font-size: 0.92rem; color: var(--muted); line-height: 1.8; max-width: 280px; }
+
+    div.footer-col { flex: 1; }
+    div.footer-col h5 { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; font-weight: normal; }
+    div.footer-col ul { list-style: none; }
+    div.footer-col ul li { margin-bottom: 12px; }
+    div.footer-col ul li a { color: rgba(240,232,216,0.45); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+    div.footer-col ul li a:hover { color: var(--gold); }
+
+    div.footer-col ol { padding-left: 0; list-style: none; }
+    div.footer-col ol li { color: rgba(240,232,216,0.45); font-size: 0.88rem; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    div.footer-col ol li b { color: var(--gold); min-width: 18px; font-size: 0.7rem; }
+
+    div.footer-bottom { border-top: 1px solid var(--border); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; }
+    div.footer-bottom p { font-size: 0.62rem; letter-spacing: 0.12em; color: var(--muted); }
+    div.footer-bottom div { display: flex; gap: 20px; }
+    div.footer-bottom a { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    div.footer-bottom a:hover { color: var(--gold); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.22s; } .d3 { transition-delay: 0.34s; } .d4 { transition-delay: 0.46s; }
+
+    /* ── sub/sup used in product ml notation ── */
+    sub { font-size: 0.7em; vertical-align: sub; }
+    sup { font-size: 0.7em; vertical-align: super; }
+    tt  { font-family: 'Courier New', monospace; color: var(--gold2); }
+    s   { color: var(--muted); }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV — uses <div>, <a> -->
+  <div class="nav">
+    <a href="#" class="logo">LUMIÈRE</a>
+    <a href="#collection">Collection</a>
+    <a href="#story">Story</a>
+    <a href="#ingredients">Notes</a>
+    <a href="#order">Orders</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-btn">Shop Now</a>
+  </div>
+
+  <!-- HERO — uses <h1><h2><h6><p><i><b><div><a> -->
+  <div class="hero">
+    <div class="hero-text">
+      <h6>Maison de Parfum &nbsp;·&nbsp; Est. 1991</h6>
+      <h1>The Scent of<br><i>Pure Desire</i></h1>
+      <h2>Where memory becomes fragrance</h2>
+      <p>
+        Each <b>LUMIÈRE</b> fragrance is a poem distilled into liquid form.
+        Crafted from the rarest materials on earth, worn by those who
+        understand that <i>beauty is invisible — only felt.</i>
+      </p>
+      <div class="hero-btns">
+        <a href="#collection" class="btn-primary">Explore Collection</a>
+        <a href="#story" class="btn-ghost">Our Atelier</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="bottle-glow"></div>
+      <div class="bottle-svg">
+        <!-- SVG Perfume Bottle — decorative, not an img tag -->
+        <svg width="200" height="370" viewBox="0 0 200 370" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#1a1005"/>
+              <stop offset="30%" stop-color="#7a5020" stop-opacity=".9"/>
+              <stop offset="58%" stop-color="#e8c47a"/>
+              <stop offset="80%" stop-color="#c8963c" stop-opacity=".8"/>
+              <stop offset="100%" stop-color="#1a1005"/>
+            </linearGradient>
+            <linearGradient id="bc" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c8963c"/>
+              <stop offset="50%" stop-color="#e8c47a"/>
+              <stop offset="100%" stop-color="#9a7030"/>
+            </linearGradient>
+            <linearGradient id="liq" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#c8963c" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#6a4010" stop-opacity=".75"/>
+            </linearGradient>
+          </defs>
+          <rect x="72" y="10" width="56" height="12" rx="6" fill="url(#bc)"/>
+          <rect x="80" y="22" width="40" height="30" rx="3" fill="url(#bc)" opacity=".9"/>
+          <path d="M80 52 Q80 76 54 88 L54 308 Q54 332 100 332 Q146 332 146 308 L146 88 Q120 76 120 52 Z" fill="url(#bg1)"/>
+          <path d="M60 130 L60 300 Q60 324 100 324 Q140 324 140 300 L140 130 Q126 124 100 124 Q74 124 60 130 Z" fill="url(#liq)"/>
+          <rect x="66" y="168" width="68" height="86" rx="1" fill="rgba(240,232,216,.09)" stroke="rgba(200,150,60,.3)" stroke-width=".6"/>
+          <text x="100" y="200" font-family="Georgia,serif" font-size="10" fill="#e8c47a" text-anchor="middle" letter-spacing="4">LUMIÈRE</text>
+          <line x1="74" y1="208" x2="126" y2="208" stroke="rgba(200,150,60,.35)" stroke-width=".6"/>
+          <text x="100" y="222" font-family="Georgia,serif" font-size="5.5" fill="rgba(232,196,122,.6)" text-anchor="middle" font-style="italic">Eau de Parfum</text>
+          <text x="100" y="237" font-family="Georgia,serif" font-size="4.5" fill="rgba(232,196,122,.4)" text-anchor="middle" letter-spacing="1.2">100 ml · No. 1</text>
+          <path d="M68 96 Q66 122 66 170 L66 290" stroke="rgba(255,255,255,.13)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="100" cy="328" rx="46" ry="7" fill="rgba(200,150,60,.1)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE — uses <div><b><i> -->
+  <div class="marquee">
+    <div class="marquee-inner">
+      <b>Rose Absolue</b><i> ✦ </i><b>Aged Oud</b><i> ✦ </i><b>Mysore Sandalwood</b><i> ✦ </i><b>Ambergris</b><i> ✦ </i><b>Iris Pallida</b><i> ✦ </i><b>Bergamot</b><i> ✦ </i><b>Vetiver</b><i> ✦ </i><b>Saffron</b><i> ✦ </i>
+      <b>Rose Absolue</b><i> ✦ </i><b>Aged Oud</b><i> ✦ </i><b>Mysore Sandalwood</b><i> ✦ </i><b>Ambergris</b><i> ✦ </i><b>Iris Pallida</b><i> ✦ </i><b>Bergamot</b><i> ✦ </i><b>Vetiver</b><i> ✦ </i><b>Saffron</b><i> ✦ </i>
+    </div>
+  </div>
+
+  <!-- COLLECTION — uses <table><th><td><tr><h1><h3><p><b><i><a><div><u><sup> -->
+  <div class="section" id="collection">
+    <h3>Signature Range</h3>
+    <h1>The <i>Collection</i></h1>
+
+    <div class="products-wrap">
+      <table class="products">
+        <tr>
+          <!-- Product 1 -->
+          <th>
+            <div class="prod-img">
+              <div class="prod-tag">Bestseller</div>
+              <svg width="140" height="260" viewBox="0 0 140 260" xmlns="http://www.w3.org/2000/svg" style="transition:transform .5s ease;">
+                <defs>
+                  <linearGradient id="p1g" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#100804"/>
+                    <stop offset="42%" stop-color="#5a2e0a" stop-opacity=".9"/>
+                    <stop offset="65%" stop-color="#b07828"/>
+                    <stop offset="100%" stop-color="#100804"/>
+                  </linearGradient>
+                </defs>
+                <rect x="46" y="7" width="48" height="9" rx="4.5" fill="#c8963c"/>
+                <rect x="52" y="16" width="36" height="22" rx="2" fill="#9a7030"/>
+                <path d="M52 38 Q52 55 34 64 L34 218 Q34 234 70 234 Q106 234 106 218 L106 64 Q88 55 88 38 Z" fill="url(#p1g)"/>
+                <path d="M40 96 L40 210 Q40 226 70 226 Q100 226 100 210 L100 96 Q88 91 70 91 Q52 91 40 96Z" fill="rgba(140,80,20,.4)"/>
+                <text x="70" y="148" font-family="Georgia,serif" font-size="7" fill="#e8c47a" text-anchor="middle" letter-spacing="2">OUD NOIR</text>
+                <text x="70" y="160" font-family="Georgia,serif" font-size="4.5" fill="rgba(232,196,122,.5)" text-anchor="middle" font-style="italic">Eau de Parfum</text>
+                <path d="M44 70 Q42 92 42 138 L42 204" stroke="rgba(255,255,255,.12)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="prod-info">
+              <h4>Oud Noir <sup>No.1</sup></h4>
+              <p>Dark oud, black amber, saffron &amp; aged leather</p>
+              <div class="prod-foot">
+                <b>₹ 13,500</b>
+                <a href="#contact">Add to Bag</a>
+              </div>
+            </div>
+          </th>
+
+          <!-- Product 2 -->
+          <th>
+            <div class="prod-img">
+              <svg width="140" height="260" viewBox="0 0 140 260" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="p2g" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#060a14"/>
+                    <stop offset="40%" stop-color="#183054" stop-opacity=".9"/>
+                    <stop offset="65%" stop-color="#5080c0"/>
+                    <stop offset="100%" stop-color="#060a14"/>
+                  </linearGradient>
+                </defs>
+                <rect x="40" y="6" width="60" height="10" rx="5" fill="#c8963c"/>
+                <rect x="46" y="16" width="48" height="24" rx="3" fill="#9a7030"/>
+                <path d="M46 40 Q46 58 26 68 L30 218 Q32 236 70 236 Q108 236 110 218 L114 68 Q94 58 94 40 Z" fill="url(#p2g)"/>
+                <path d="M32 96 L36 210 Q37 228 70 228 Q103 228 104 210 L108 96 Q96 91 70 91 Q44 91 32 96Z" fill="rgba(40,80,160,.35)"/>
+                <text x="70" y="148" font-family="Georgia,serif" font-size="7" fill="#e8c47a" text-anchor="middle" letter-spacing="2">CÉLESTE</text>
+                <text x="70" y="160" font-family="Georgia,serif" font-size="4.5" fill="rgba(232,196,122,.5)" text-anchor="middle" font-style="italic">Eau de Parfum</text>
+                <path d="M36 74 Q34 96 35 140 L36 206" stroke="rgba(255,255,255,.1)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="prod-info">
+              <h4>Céleste <sup>No.2</sup></h4>
+              <p>Sea salt, iris, white jasmine &amp; driftwood</p>
+              <div class="prod-foot">
+                <b>₹ 10,800</b>
+                <a href="#contact">Add to Bag</a>
+              </div>
+            </div>
+          </th>
+
+          <!-- Product 3 -->
+          <th>
+            <div class="prod-img">
+              <div class="prod-tag">New</div>
+              <svg width="140" height="260" viewBox="0 0 140 260" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="p3g" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#140406"/>
+                    <stop offset="38%" stop-color="#4c1010" stop-opacity=".9"/>
+                    <stop offset="64%" stop-color="#b03040"/>
+                    <stop offset="100%" stop-color="#140406"/>
+                  </linearGradient>
+                </defs>
+                <rect x="44" y="7" width="52" height="10" rx="5" fill="#c8963c"/>
+                <rect x="50" y="17" width="40" height="22" rx="2" fill="#9a7030"/>
+                <path d="M50 39 Q50 56 32 66 L36 216 Q38 234 70 234 Q102 234 104 216 L108 66 Q90 56 90 39 Z" fill="url(#p3g)"/>
+                <path d="M38 94 L42 208 Q43 226 70 226 Q97 226 98 208 L102 94 Q90 89 70 89 Q50 89 38 94Z" fill="rgba(140,20,30,.38)"/>
+                <text x="70" y="148" font-family="Georgia,serif" font-size="6" fill="#e8c47a" text-anchor="middle" letter-spacing="2">ROSE ROUGE</text>
+                <text x="70" y="160" font-family="Georgia,serif" font-size="4.5" fill="rgba(232,196,122,.5)" text-anchor="middle" font-style="italic">Eau de Parfum</text>
+                <path d="M40 72 Q38 94 39 138 L40 204" stroke="rgba(255,255,255,.1)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="prod-info">
+              <h4>Rose Rouge <sup>No.3</sup></h4>
+              <p>Damask rose, cardamom, patchouli &amp; vanilla</p>
+              <div class="prod-foot">
+                <b>₹ 12,200</b>
+                <a href="#contact">Add to Bag</a>
+              </div>
+            </div>
+          </th>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- STORY — uses <blockquote><dl><dt><dd><pre><h1><h3><p><b><i><div> -->
+  <div class="story reveal" id="story">
+    <div class="story-left">
+      <h3>The Lumière Atelier</h3>
+      <h1 style="font-size:2.6rem;font-weight:normal;margin-bottom:0;">The invisible<br><i>art of scent</i></h1>
+
+      <blockquote>
+        <p>A fragrance does not merely smell beautiful — it <i>remembers</i> for you. It is the one sense that bypasses thought and speaks directly to feeling.</p>
+        <b>— Camille Rousseau, Maître Parfumeur</b>
+      </blockquote>
+
+      <pre class="stats">
+        <span><b>34</b><i>Years of craft</i></span>
+        <span><b>18+</b><i>Rare ingredients</i></span>
+        <span><b>52</b><i>Countries served</i></span>
+      </pre>
+    </div>
+
+    <div class="story-right">
+      <h3 style="margin-top:0;">Our Philosophy</h3>
+      <p style="color:var(--muted);line-height:1.9;font-size:1rem;margin-bottom:0;">
+        In our atelier in Grasse, every <b>LUMIÈRE</b> fragrance begins as an emotion — a memory of rain, a field at dusk, a lover's warmth. Our master perfumer <i>translates feeling into scent</i>, blending rare materials gathered from across the world.
+      </p>
+
+      <dl>
+        <dt>Sourcing</dt>
+        <dd>All raw materials are ethically sourced from their regions of origin — rose from Bulgaria, oud from Southeast Asia, sandalwood from Mysore.</dd>
+
+        <dt>Craftsmanship</dt>
+        <dd>Each batch is hand-blended and aged for a minimum of 8 weeks before bottling, ensuring depth and longevity.</dd>
+
+        <dt>Packaging</dt>
+        <dd>Every flacon is mouth-blown by artisan glassmakers in Lyon, sealed with a hand-lacquered cap.</dd>
+      </dl>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- INGREDIENTS — uses <ul><li><h1><h3><h5><p><b><div> -->
+  <div class="ingredients reveal" id="ingredients">
+    <h3 style="text-align:center;">What We Craft With</h3>
+    <h1 style="text-align:center;font-size:clamp(2rem,3.5vw,3rem);font-weight:normal;margin-bottom:0;">Signature <i>Ingredients</i></h1>
+
+    <div class="ing-grid">
+      <div class="ing-card reveal d1">
+        <h5>Rose Absolue</h5>
+        <p>Harvested at dawn in the valleys of Grasse — rich, honeyed and warm with heart.</p>
+        <ul class="notes-list">
+          <li><b>Origin:</b> Grasse, France</li>
+          <li><b>Note:</b> Heart</li>
+          <li><b>Character:</b> Warm, honeyed, feminine</li>
+        </ul>
+      </div>
+      <div class="ing-card reveal d2">
+        <h5>Aged Oud</h5>
+        <p>Sacred resin from agarwood trees centuries old — smoky, rich and transcendent.</p>
+        <ul class="notes-list">
+          <li><b>Origin:</b> Cambodia</li>
+          <li><b>Note:</b> Base</li>
+          <li><b>Character:</b> Deep, smoky, meditative</li>
+        </ul>
+      </div>
+      <div class="ing-card reveal d3">
+        <h5>Ambergris</h5>
+        <p>The rarest oceanic treasure — amplifies every note and lends radiant longevity.</p>
+        <ul class="notes-list">
+          <li><b>Origin:</b> Atlantic Ocean</li>
+          <li><b>Note:</b> Fixative</li>
+          <li><b>Character:</b> Marine, warm, luminous</li>
+        </ul>
+      </div>
+      <div class="ing-card reveal d4">
+        <h5>Mysore Sandalwood</h5>
+        <p>Creamy, milky, and endlessly smooth — the timeless Indian base that holds all else.</p>
+        <ul class="notes-list">
+          <li><b>Origin:</b> Mysore, India</li>
+          <li><b>Note:</b> Base</li>
+          <li><b>Character:</b> Silky, warm, persistent</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ORDER TABLE — uses <table><tr><th><td><b><i><u><s><sub><h1><h3> -->
+  <div class="order-section reveal" id="order">
+    <h3>Available Sizes</h3>
+    <h1 style="font-weight:normal;">Collection <i>Price Guide</i></h1>
+
+    <table class="order-tbl">
+      <tr>
+        <th>Fragrance</th>
+        <th>Size</th>
+        <th>Concentration</th>
+        <th>Notes</th>
+        <th>Price</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td><b>Oud Noir</b> <sup>No.1</sup></td>
+        <td>50 ml</td>
+        <td><tt>EDP 22%</tt></td>
+        <td><i>Oud, Amber, Leather</i></td>
+        <td><u>₹ 8,500</u></td>
+        <td>In Stock</td>
+      </tr>
+      <tr>
+        <td><b>Oud Noir</b> <sup>No.1</sup></td>
+        <td>100 ml</td>
+        <td><tt>EDP 22%</tt></td>
+        <td><i>Oud, Amber, Leather</i></td>
+        <td><u>₹ 13,500</u></td>
+        <td>In Stock</td>
+      </tr>
+      <tr>
+        <td><b>Céleste</b> <sup>No.2</sup></td>
+        <td>50 ml</td>
+        <td><tt>EDP 18%</tt></td>
+        <td><i>Iris, Jasmine, Driftwood</i></td>
+        <td><u>₹ 7,200</u></td>
+        <td>In Stock</td>
+      </tr>
+      <tr>
+        <td><b>Céleste</b> <sup>No.2</sup></td>
+        <td>100 ml</td>
+        <td><tt>EDP 18%</tt></td>
+        <td><i>Iris, Jasmine, Driftwood</i></td>
+        <td><u>₹ 10,800</u></td>
+        <td>In Stock</td>
+      </tr>
+      <tr>
+        <td><b>Rose Rouge</b> <sup>No.3</sup></td>
+        <td>50 ml</td>
+        <td><tt>EDP 20%</tt></td>
+        <td><i>Rose, Cardamom, Vanilla</i></td>
+        <td><s>₹ 8,000</s> &nbsp;<i>₹ 6,800</i></td>
+        <td><i>Launch Offer</i></td>
+      </tr>
+      <tr>
+        <td><b>Rose Rouge</b> <sup>No.3</sup></td>
+        <td>100 ml</td>
+        <td><tt>EDP 20%</tt></td>
+        <td><i>Rose, Cardamom, Vanilla</i></td>
+        <td><u>₹ 12,200</u></td>
+        <td>In Stock</td>
+      </tr>
+      <tr>
+        <td><b>Discovery Set</b></td>
+        <td>3 × 10 ml<sub>each</sub></td>
+        <td><tt>EDP</tt></td>
+        <td><i>All three fragrances</i></td>
+        <td><u>₹ 4,500</u></td>
+        <td>Limited</td>
+      </tr>
+    </table>
+  </div>
+
+  <hr>
+
+  <!-- CONTACT — uses <form><input><label><h1><h3><address><a><p><div> -->
+  <div class="contact reveal" id="contact">
+    <h3>Get In Touch</h3>
+    <h1>Order &amp; <i>Enquiries</i></h1>
+
+    <form class="contact-form" onsubmit="event.preventDefault();alert('Thank you! We will contact you within 24 hours. ✦')">
+      <div class="field">
+        <label>Full Name</label>
+        <input type="text" placeholder="Your full name"/>
+      </div>
+      <div class="field">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@example.com"/>
+      </div>
+      <div class="field">
+        <label>Phone Number</label>
+        <input type="text" placeholder="+91 00000 00000"/>
+      </div>
+      <div class="field">
+        <label>City</label>
+        <input type="text" placeholder="Mumbai, Delhi…"/>
+      </div>
+      <div class="field-full">
+        <label>Fragrance of Interest</label>
+        <input type="text" placeholder="e.g. Oud Noir 100ml, Discovery Set…"/>
+      </div>
+      <div class="field-full">
+        <input type="submit" value="Send Enquiry →"/>
+      </div>
+    </form>
+
+    <address>
+      <div>
+        <h6>Atelier</h6>
+        <p>12 Rue du Jasmin<br>Grasse, France 06130</p>
+      </div>
+      <div>
+        <h6>India Office</h6>
+        <p>Colaba Causeway, Mumbai<br>Maharashtra 400005</p>
+      </div>
+      <div>
+        <h6>Email</h6>
+        <a href="mailto:hello@lumiereparfum.com">hello@lumiereparfum.com</a>
+      </div>
+      <div>
+        <h6>WhatsApp</h6>
+        <a href="#">+91 98200 00000</a>
+      </div>
+    </address>
+  </div>
+
+  <!-- FOOTER — uses <div><ul><ol><li><a><h1><h5><p><b> -->
+  <div class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h1>LUMIÈRE</h1>
+        <p><i>A maison de parfum devoted to the invisible art of beauty. Created in Grasse, cherished across the world.</i></p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Collection</h5>
+        <ul>
+          <li><a href="#">Oud Noir No.1</a></li>
+          <li><a href="#">Céleste No.2</a></li>
+          <li><a href="#">Rose Rouge No.3</a></li>
+          <li><a href="#">Discovery Set</a></li>
+          <li><a href="#">Gift Wrapping</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Maison</h5>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">The Perfumer</a></li>
+          <li><a href="#">Ingredients</a></li>
+          <li><a href="#">Sustainability</a></li>
+          <li><a href="#">Press</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Why Lumière</h5>
+        <ol>
+          <li><b>01</b> Ethically sourced</li>
+          <li><b>02</b> Hand-blended in Grasse</li>
+          <li><b>03</b> Artisan glass flacons</li>
+          <li><b>04</b> 8-week aging process</li>
+          <li><b>05</b> Free India shipping</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 LUMIÈRE Maison de Parfum. All rights reserved.</p>
+      <div>
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+const obs = new IntersectionObserver(entries => {
+
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+
+</body>
+</html>
